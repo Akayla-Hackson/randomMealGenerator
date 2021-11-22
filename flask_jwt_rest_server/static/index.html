@@ -1,44 +1,252 @@
 <!DOCTYPE html>
 <html>
+<style>
+
+#title1 {
+position: fixed;
+color: blue;
+left:36%;
+top:1%;
+padding:2px;
+}
+
+@import "bourbon";
+
+body {
+	background: #eee !important;	
+}
+
+#signDisplay{
+    position: fixed;
+    background-color: #fff;
+    width: 30%;
+    margin: 80px auto;
+    border-radius: 10px;
+    padding: 20px;
+    border-left: 5px solid #009688;
+    box-shadow: 0px 0px 0px 0px #3f51b5;
+    left: 35%;
+    top:13%;
+}
+.login>.row>h2 {
+    margin: auto;
+}
+
+.btn-form {
+    width: 100%;
+    margin-top: 20px;
+}
+
+#col1 {
+position: fixed;
+top: 70%;
+left:18%;
+padding: 10px;
+}
+
+#col2 { 
+position: fixed;
+top: 70%;
+left:43%;
+padding: 10px;
+}
+#col3 {
+position: fixed;
+top: 70%;
+left:65%;
+padding: 10px;
+}
+
+#greatG {
+position: fixed;
+top:25%;
+left:19%;
+width: 150px;
+height: 280px;
+}
+#theGiver {
+position: fixed;
+top:25%;
+left:43%;
+width: 150px;
+height: 280px;
+}
+#kiteR {
+position: fixed;
+top:25%;
+left:67%;
+width: 150px;
+height: 280px;
+}
+
+</style>
+
     <head>
 	     <script src="https://code.jquery.com/jquery-3.6.0.js" 
 		     integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
 	     <script src="/static/cis444.js"></script>
+	     <!-- Required meta tags -->
+    	     <meta charset="utf-8">
+    	     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	     <!-- Bootstrap CSS -->
+    	     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+        		integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
     </head>
     <body>
+ 	<h1 id=title1>Akayla's Bookstore</h1>      
+	<!-- signup setup -->
+		<div class="container2" id="signDisplay">
+                        <div class="login">
+                                <div class="row">
+                                        <h2>Please Sign In</h2>
+					<div class="col-md-12">        
+	    					<form >
+  						<label for="fname">Username:</label><br>
+  							<input type="text" id="user" name="username" value="Ak"><br>
+  						<label for="password">Password:</label><br>
+  							<input type="password" id="password" name="password" value="password"><br><br>
+  					</div>
+					<div class="col-md-6">	
+							<input type="submit" value="Sign In" onclick="return send_form();">
+							<p id="loginError" style="display: none;">Login Failed. Try again!"</p>
+					</div>
+						</form>
+	    			</div>
+			</div>
+		</div>
+
+	<div class="bContainer" id="bookPage" style="display:none;">
+			<div id="col1">
+				<img src="https://i.ibb.co/NpvncXV/great-Gatsby.jpg" alt="great gatsby" id="greatG"></img>
+				<h3 id="bname1"></h3>
+				<p id="bprice1"></p>
+				<form>
+				<button id="buyButton1" type="button" onclick="return buyBook1()">Buy Book</button>
+                                <input id="bn1" name="bname" type="hidden" value="">
+                                <input id="bp1" name="bprice" type="hidden" value="">
+				</form>
+			</div>
+			<div id="col2">
+				<img src="https://i.ibb.co/BCwX2bN/giver.jpg" alt="giver" id="theGiver"></img>
+				<h3 id="bname2"></h3>
+				<p id="bprice2"></p>
+				<button id="buyButton2" type="submit" onclick="return buyBook2()">Buy Book</button>
+                                <input id="bn2" name="bname" type="hidden" value="">
+                                <input id="bp2" name="bprice" type="hidden" value="">	
+			</div>
+			<div id="col3">
+				<img src="https://i.ibb.co/sCQx1TD/kite-Runner.jpg" alt="kite runner" id="kiteR"></img>
+                                <h3 id="bname3"></h3>
+                                <p id="bprice3"></p>
+				<button id="buyButton3" type="submit" onclick="return buyBook3()">Buy Book</button>
+				<input id="bn3" name="bname" type="hidden" value="">
+                		<input id="bp3" name="bprice" type="hidden" value="">
+                        </div>
+        </div>
 
 	<script>
-		function send_form(){
-			$.post("/open_api/login", { "firstname":$('#fname').val(), "password":$('#password').val()},
-                       		function(data, textStatus) {
-					//this gets called when browser receives response from server
-					console.log(data.token);
-					jwt = data.token;
-					//make secure call with the jwt
-					secure_get_with_token("/secure_api/get_books", function(data){console.log(data)},
-						function(err){ console.log(err) });
-				}, "json").fail( function(response) {
-					//this gets called if the server throws an error
-					console.log("error");
-					console.log(response);
-				});
+                function send_form(){
+                        $.post("/open_api/login", { "username":$('#user').val(), "password":$('#password').val()},
+                                function(data, textStatus) {
+                                        //this gets called when browser receives response from server
+                                        console.log(data.token);
+                                        jwt = data.token;
+                                        console.log(data);
+                                        noError();
+                                        goToBooksPage();
+                                        //make secure call with the jwt
+                                        get_books();
+
+                                }, "json").fail( function(response) {
+                                        //this gets called if the server throws an error
+                                        console.log("error");
+                                        displayError();
+                                        console.log(response);
+                                });
+                        return false;
+                }
+
+                function get_books(){
+                        //make secure call with the jwt
+                         secure_get_with_token("/secure_api/get_books", 
+                                 function(data){
+                                         console.log("got books"); 
+                                         console.log(data)
+                                         var arrayLength = 3;
+                                         var allBooks = [arrayLength];
+                                         for (var i = 0; i < data.myBooks.length; i++) {
+                                                var object = data.myBooks[i];
+                                                allBooks[i] = object;
+                                                for (property in object) {
+                                                        var value = object[property];
+                                                }       
+                                        }
+                                 $('#bname1').html(allBooks[0][0]);
+                                 $('#bname2').html(allBooks[1][0]);
+                                 $('#bname3').html(allBooks[2][0]);
+                                 $('#bprice1').html('$' + allBooks[0][1]);
+                                 $('#bprice2').html('$' + allBooks[1][1]);
+                                 $('#bprice3').html('$' + allBooks[2][1]);
+
+
+                                 $('#bn1').val(allBooks[0][0]);
+                                 $('#bn2').val(allBooks[1][0]);
+                                 $('#bn3').val(allBooks[2][0]);
+                                 $('#bp1').val(allBooks[0][1]);
+                                 $('#bp2').val(allBooks[1][1]);
+                                 $('#bp3').val(allBooks[2][1]);
+                                },
+                                 function(err){ 
+                                         console.log(err) 
+                                 });    
+                }
+		function displayError(){
+                        var loginError = document.getElementById("loginError");
+                        loginError.style.display = "block";
+                }
+                
+                function noError(){
+                        var loginError = document.getElementById("loginError");
+                        loginError.style.display = "none";
+
+                }
+                function goToBooksPage(){
+                        var signDisplay = document.getElementById("signDisplay");
+                        signDisplay.style.display = "none";
+                        var bookPage = document.getElementById("bookPage");
+                        bookPage.style.display = "block";
+                }
+                function buyBook1(){
+                        secure_get_with_token("/secure_api/buy_books",{"bname":$('#bn1').val(), "bprice":$('#bp1').val()},
+                                        function(data){
+                                                console.log(data);
+                                        },
+                                        function(err){ 
+                                                console.log(err) 
+                                 });
 			return false;
-		}
-
-		function get_books(){
-			
-		}
-
-	</script>
-            <div id="login">
-	    	<form >
-  			<label for="fname">First name:</label><br>
-  				<input type="text" id="fname" name="fname" value="John"><br>
-  			<label for="password">Password:</label><br>
-  				<input type="password" id="password" name="password" value="12212"><br><br>
-  			<input type="submit" value="Signup" onclick="return send_form();">
-		</form>
-	    </div>
+                }
+		function buyBook2(){
+                        secure_get_with_token("/secure_api/buy_books",{"bname":$('#bn2').val(), "bprice":$('#bp2').val()},
+                                        function(data){
+                                                console.log(data);
+                                        },
+                                        function(err){ 
+                                                console.log(err) 
+                                 });
+			return false;
+                }
+		function buyBook3(){
+                        secure_get_with_token("/secure_api/buy_books",{"bname":$('#bn3').val(), "bprice":$('#bp3').val()},
+                                        function(data){
+                                                console.log(data);
+                                        },
+                                        function(err){ 
+                                                console.log(err) 
+                                 });
+			return false;
+                }
+        </script>
     </body>
 </html>
 
