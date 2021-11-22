@@ -78,6 +78,18 @@ left:67%;
 width: 150px;
 height: 280px;
 }
+#displayMessage {
+    position: fixed;
+    top:48%;
+    left:30%;
+    text-size: 400px;
+}
+#refreshButton {
+position: fixed;
+top: 20%;
+left:70%;
+padding: 10px;
+}
 
 </style>
 
@@ -120,11 +132,9 @@ height: 280px;
 				<img src="https://i.ibb.co/NpvncXV/great-Gatsby.jpg" alt="great gatsby" id="greatG"></img>
 				<h3 id="bname1"></h3>
 				<p id="bprice1"></p>
-				<form>
-				<button id="buyButton1" type="button" onclick="return buyBook1()">Buy Book</button>
+				<button id="buyButton1" type="submit" onclick="return buyBook1()">Buy Book</button>
                                 <input id="bn1" name="bname" type="hidden" value="">
                                 <input id="bp1" name="bprice" type="hidden" value="">
-				</form>
 			</div>
 			<div id="col2">
 				<img src="https://i.ibb.co/BCwX2bN/giver.jpg" alt="giver" id="theGiver"></img>
@@ -143,6 +153,8 @@ height: 280px;
                 		<input id="bp3" name="bprice" type="hidden" value="">
                         </div>
         </div>
+	<h1 id="displayMessage" style="display: none;">Thank You For Your Purchase!</h1>
+	<button id="refreshButton" type="button" style="display: none;" onclick= "getLoginPage()">Back To Login</button>
 
 	<script>
                 function send_form(){
@@ -168,7 +180,7 @@ height: 280px;
 
                 function get_books(){
                         //make secure call with the jwt
-                         secure_get_with_token("/secure_api/get_books", 
+			secure_get_with_token("/secure_api/get_books",{ }, 
                                  function(data){
                                          console.log("got books"); 
                                          console.log(data)
@@ -181,21 +193,20 @@ height: 280px;
                                                         var value = object[property];
                                                 }       
                                         }
-                                 $('#bname1').html(allBooks[0][0]);
-                                 $('#bname2').html(allBooks[1][0]);
-                                 $('#bname3').html(allBooks[2][0]);
-                                 $('#bprice1').html('$' + allBooks[0][1]);
-                                 $('#bprice2').html('$' + allBooks[1][1]);
-                                 $('#bprice3').html('$' + allBooks[2][1]);
+                                	 $('#bname1').html(allBooks[0][0]);
+                                	 $('#bname2').html(allBooks[1][0]);
+                                	 $('#bname3').html(allBooks[2][0]);
+                                	 $('#bprice1').html('$' + allBooks[0][1]);
+                                	 $('#bprice2').html('$' + allBooks[1][1]);
+                                	 $('#bprice3').html('$' + allBooks[2][1]);
 
-
-                                 $('#bn1').val(allBooks[0][0]);
-                                 $('#bn2').val(allBooks[1][0]);
-                                 $('#bn3').val(allBooks[2][0]);
-                                 $('#bp1').val(allBooks[0][1]);
-                                 $('#bp2').val(allBooks[1][1]);
-                                 $('#bp3').val(allBooks[2][1]);
-                                },
+                               	  	 $('#bn1').val(allBooks[0][0]);
+                                	 $('#bn2').val(allBooks[1][0]);
+                                   	 $('#bn3').val(allBooks[2][0]);
+                                 	 $('#bp1').val(allBooks[0][1]);
+                                 	 $('#bp2').val(allBooks[1][1]);
+                                 	 $('#bp3').val(allBooks[2][1]);
+				},
                                  function(err){ 
                                          console.log(err) 
                                  });    
@@ -216,10 +227,33 @@ height: 280px;
                         var bookPage = document.getElementById("bookPage");
                         bookPage.style.display = "block";
                 }
+		function restyle()
+		{
+                        var signupContainer = document.getElementById("signDisplay");
+                        signupContainer.style.display = "none";
+			var booksPage = document.getElementById("bookPage");
+                        booksPage.style.display = "none";
+			var displayMesg = document.getElementById("displayMessage");
+			displayMesg.style.display = "block";
+			var refreshButton = document.getElementById("refreshButton");
+			refreshButton.style.display = "block";
+		}
+		function getLoginPage()
+		{
+                        var signupContainer = document.getElementById("signDisplay");
+                        signupContainer.style.display = "block";
+                        var booksPage = document.getElementById("bookPage");
+                        booksPage.style.display = "none";
+                        var displayMesg = document.getElementById("displayMessage");
+                        displayMesg.style.display = "none";
+                        var refreshButton = document.getElementById("refreshButton");
+                        refreshButton.style.display = "none";
+		}
                 function buyBook1(){
                         secure_get_with_token("/secure_api/buy_books",{"bname":$('#bn1').val(), "bprice":$('#bp1').val()},
                                         function(data){
                                                 console.log(data);
+						restyle();
                                         },
                                         function(err){ 
                                                 console.log(err) 
@@ -230,6 +264,7 @@ height: 280px;
                         secure_get_with_token("/secure_api/buy_books",{"bname":$('#bn2').val(), "bprice":$('#bp2').val()},
                                         function(data){
                                                 console.log(data);
+						restyle();
                                         },
                                         function(err){ 
                                                 console.log(err) 
@@ -240,6 +275,7 @@ height: 280px;
                         secure_get_with_token("/secure_api/buy_books",{"bname":$('#bn3').val(), "bprice":$('#bp3').val()},
                                         function(data){
                                                 console.log(data);
+						restyle();
                                         },
                                         function(err){ 
                                                 console.log(err) 
