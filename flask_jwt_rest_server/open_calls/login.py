@@ -17,10 +17,6 @@ def handle_request():
     #use data here to auth the user
     password= request.form['password']
     username = request.form['username']
-    
-    print(request.form['username'])
-    print(request.form['password'])
-
     #check if username is in database already
     cur = global_db_con.cursor()
     cur.execute("select * from users where username = '" + username + "';")

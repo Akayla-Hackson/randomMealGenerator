@@ -15,7 +15,6 @@ def token_required(f):
     def _verify(*args, **kwargs):
         #secrets = get_secrets()
         auth_headers = request.headers.get('Authorization', '').split(':')
-        print(auth_headers) 
         g.secrets = {"JWT": "KxQ(S#@>\"5=m$#58SgzD,+H+a73*pzKH,g5_"}
 
         invalid_msg = {
@@ -35,7 +34,6 @@ def token_required(f):
             data = jwt.decode(token,  g.secrets['JWT'], algorithms=["HS256"])
             #set global jwt_data
             g.jwt_data = data
-            print(g.jwt_data)
             return f( *args, **kwargs)
         except jwt.ExpiredSignatureError:
              return json_response(status_=401 ,message=expired_msg) # 401 is Unauthorized HTTP status code
