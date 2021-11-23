@@ -10,6 +10,9 @@ global_db_con = get_db()
 
 def handle_request():
     logger.debug("Buy Books Function")
+    
+    bookName = request.args.get('bname',type=str)
+    bookPrice = request.args.get('bprice',type=str)
 
     cur = global_db_con.cursor()
     cur.execute(f"insert into bought (name, price) values ( '{bookName}', {bookPrice});")
