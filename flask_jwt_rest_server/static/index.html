@@ -36,48 +36,6 @@ body {
     width: 100%;
     margin-top: 20px;
 }
-
-#col1 {
-position: fixed;
-top: 70%;
-left:18%;
-padding: 10px;
-}
-
-#col2 { 
-position: fixed;
-top: 70%;
-left:43%;
-padding: 10px;
-}
-#col3 {
-position: fixed;
-top: 70%;
-left:65%;
-padding: 10px;
-}
-
-#greatG {
-position: fixed;
-top:25%;
-left:19%;
-width: 150px;
-height: 280px;
-}
-#theGiver {
-position: fixed;
-top:25%;
-left:43%;
-width: 150px;
-height: 280px;
-}
-#kiteR {
-position: fixed;
-top:25%;
-left:67%;
-width: 150px;
-height: 280px;
-}
 #displayMessage {
     position: fixed;
     top:48%;
@@ -105,7 +63,7 @@ padding: 10px;
         		integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
     </head>
     <body>
- 	<h1 id=title1>Akayla's Bookstore</h1>      
+	<h1 id=title1>Akayla's Meal Helper</h1>      
 	<!-- signup setup -->
 		<div class="container2" id="signDisplay">
                         <div class="login">
@@ -127,35 +85,31 @@ padding: 10px;
 			</div>
 		</div>
 
-	<div class="bContainer" id="bookPage" style="display:none;">
-			<div id="col1">
-				<img src="https://i.ibb.co/NpvncXV/great-Gatsby.jpg" alt="great gatsby" id="greatG"></img>
-				<h3 id="bname1"></h3>
-				<p id="bprice1"></p>
-				<button id="buyButton1" type="submit" onclick="return buyBook1()">Buy Book</button>
-                                <input id="bn1" name="bname" type="hidden" value="">
-                                <input id="bp1" name="bprice" type="hidden" value="">
-			</div>
-			<div id="col2">
-				<img src="https://i.ibb.co/BCwX2bN/giver.jpg" alt="giver" id="theGiver"></img>
-				<h3 id="bname2"></h3>
-				<p id="bprice2"></p>
-				<button id="buyButton2" type="submit" onclick="return buyBook2()">Buy Book</button>
-                                <input id="bn2" name="bname" type="hidden" value="">
-                                <input id="bp2" name="bprice" type="hidden" value="">	
-			</div>
-			<div id="col3">
-				<img src="https://i.ibb.co/sCQx1TD/kite-Runner.jpg" alt="kite runner" id="kiteR"></img>
-                                <h3 id="bname3"></h3>
-                                <p id="bprice3"></p>
-				<button id="buyButton3" type="submit" onclick="return buyBook3()">Buy Book</button>
-				<input id="bn3" name="bname" type="hidden" value="">
-                		<input id="bp3" name="bprice" type="hidden" value="">
-                        </div>
-        </div>
-	<h1 id="displayMessage" style="display: none;">Thank You For Your Purchase!</h1>
-	<button id="refreshButton" type="button" style="display: none;" onclick= "getLoginPage()">Back To Login</button>
 
+		<table align="center" id="stage" style="display=none;">
+			<tr>
+				<td><img id="SlotImage1" src="bar.jpg" alt="Slot Image #1" style="Width:102px; Height:132px;"></td>
+				<td><img id="SlotImage2" src="bar.jpg" alt="Slot Image #2" style="Width:102px; Height:132px;"></td>
+				<td><img id="SlotImage3" src="bar.jpg" alt="Slot Image #3" style="Width:102px; Height:132px;"></td>
+			</tr>
+			<tr>
+				<td></td>
+				<td><input type="button" onclick="DoSpin()" value="Click To Spin"></td>
+				<td></td>
+			</tr>
+			<tr>
+				<td>Money:</td>
+				<td><input type="text" onchange="checkMoney()" style="width: 100px" name="money" value="20"></td>
+				<td></td>
+			</tr>
+			<tr>
+				<td>Bet:</td>
+				<td><input type="text" onchange="checkBet()" style="width: 100px" name="bet" value="1"></td>
+				<td></td>
+			</tr>
+		</table>
+
+		<button id="refreshButton" type="button" style="display: none;" onclick= "getLoginPage()">Back To Login</button>
 	<script>
                 function send_form(){
                         $.post("/open_api/login", { "username":$('#user').val(), "password":$('#password').val()},
@@ -165,9 +119,8 @@ padding: 10px;
                                         jwt = data.token;
                                         console.log(data);
                                         noError();
-                                        goToBooksPage();
+                                        goToMainPage();
                                         //make secure call with the jwt
-                                        get_books();
 
                                 }, "json").fail( function(response) {
                                         //this gets called if the server throws an error
@@ -178,39 +131,7 @@ padding: 10px;
                         return false;
                 }
 
-                function get_books(){
-                        //make secure call with the jwt
-			secure_get_with_token("/secure_api/get_books",{ }, 
-                                 function(data){
-                                         console.log("got books"); 
-                                         console.log(data)
-                                         var arrayLength = 3;
-                                         var allBooks = [arrayLength];
-                                         for (var i = 0; i < data.myBooks.length; i++) {
-                                                var object = data.myBooks[i];
-                                                allBooks[i] = object;
-                                                for (property in object) {
-                                                        var value = object[property];
-                                                }       
-                                        }
-                                	 $('#bname1').html(allBooks[0][0]);
-                                	 $('#bname2').html(allBooks[1][0]);
-                                	 $('#bname3').html(allBooks[2][0]);
-                                	 $('#bprice1').html('$' + allBooks[0][1]);
-                                	 $('#bprice2').html('$' + allBooks[1][1]);
-                                	 $('#bprice3').html('$' + allBooks[2][1]);
-
-                               	  	 $('#bn1').val(allBooks[0][0]);
-                                	 $('#bn2').val(allBooks[1][0]);
-                                   	 $('#bn3').val(allBooks[2][0]);
-                                 	 $('#bp1').val(allBooks[0][1]);
-                                 	 $('#bp2').val(allBooks[1][1]);
-                                 	 $('#bp3').val(allBooks[2][1]);
-				},
-                                 function(err){ 
-                                         console.log(err) 
-                                 });    
-                }
+                
 		function displayError(){
                         var loginError = document.getElementById("loginError");
                         loginError.style.display = "block";
@@ -221,68 +142,101 @@ padding: 10px;
                         loginError.style.display = "none";
 
                 }
-                function goToBooksPage(){
+                function goToMainPage(){
                         var signDisplay = document.getElementById("signDisplay");
                         signDisplay.style.display = "none";
-                        var bookPage = document.getElementById("bookPage");
-                        bookPage.style.display = "block";
-                }
+			var stage = document.getElementById("stage");
+                        stage.style.display = "block";
+		}
 		function restyle()
 		{
                         var signupContainer = document.getElementById("signDisplay");
                         signupContainer.style.display = "none";
-			var booksPage = document.getElementById("bookPage");
-                        booksPage.style.display = "none";
-			var displayMesg = document.getElementById("displayMessage");
-			displayMesg.style.display = "block";
 			var refreshButton = document.getElementById("refreshButton");
 			refreshButton.style.display = "block";
+			var stage = document.getElementById("stage");
+                        stage.style.display = "none";
 		}
 		function getLoginPage()
 		{
                         var signupContainer = document.getElementById("signDisplay");
                         signupContainer.style.display = "block";
-                        var booksPage = document.getElementById("bookPage");
-                        booksPage.style.display = "none";
-                        var displayMesg = document.getElementById("displayMessage");
-                        displayMesg.style.display = "none";
                         var refreshButton = document.getElementById("refreshButton");
                         refreshButton.style.display = "none";
+			var stage = document.getElementById("stage");
+                        stage.style.display = "none";
 		}
-                function buyBook1(){
-                        secure_get_with_token("/secure_api/buy_books",{"bname":$('#bn1').val(), "bprice":$('#bp1').val()},
-                                        function(data){
-                                                console.log(data);
-						restyle();
-                                        },
-                                        function(err){ 
-                                                console.log(err) 
-                                 });
-			return false;
-                }
-		function buyBook2(){
-                        secure_get_with_token("/secure_api/buy_books",{"bname":$('#bn2').val(), "bprice":$('#bp2').val()},
-                                        function(data){
-                                                console.log(data);
-						restyle();
-                                        },
-                                        function(err){ 
-                                                console.log(err) 
-                                 });
-			return false;
-                }
-		function buyBook3(){
-                        secure_get_with_token("/secure_api/buy_books",{"bname":$('#bn3').val(), "bprice":$('#bp3').val()},
-                                        function(data){
-                                                console.log(data);
-						restyle();
-                                        },
-                                        function(err){ 
-                                                console.log(err) 
-                                 });
-			return false;
-                }
-        </script>
+		function DoSpin() {
+				//All three slot’s images should be randomly selected 
+				//and displayed on the page.
+				//If all three images match, alert the user of a win.
+				
+				var money = parseInt(document.getElementsByName('money')[0].value);
+				var bet = parseInt(document.getElementsByName('bet')[0].value);
+				var slotImages = ["bar.jpg", "cherry.jpg", "donut.jpg", "lemon.jpg"];
+				
+				if (money > 0) {
+					document.getElementsByName('money')[0].value = money - bet;
+					//keys: 0=bar, 1=cherry, 2=donut, 3=lemon
+					var slotImage1 = Math.floor((Math.random() * 4));
+					var slotImage2 = Math.floor((Math.random() * 4));
+					var slotImage3 = Math.floor((Math.random() * 4));
+				
+					document.getElementById('SlotImage1').src = slotImages[slotImage1];
+					document.getElementById('SlotImage2').src = slotImages[slotImage2];
+					document.getElementById('SlotImage3').src = slotImages[slotImage3];
+			
+					CheckWinner(slotImage1,slotImage2,slotImage3,money,bet);
+				}
+				else {
+					//out of money
+					alert('You lose. Enter more money to keep playing.');
+				}	
+			}
+			
+			function CheckWinner(x,y,z,money,bet) {
+				if (x == y && x == z) {
+					document.getElementsByName('money')[0].value = money + (13 * bet);
+					alert('YOU WIN!');
+				}
+			}
+			
+			function checkBet() {
+				var bet = parseInt(document.getElementsByName('bet')[0].value)
+				//check if the user entered a valid numerical bet
+				if (isNaN(bet)){
+					//bet is not a number
+					alert('Please enter bet as a numerical value.');
+				}
+				else {
+					if (bet <= 0){
+						// bet too low
+						alert('Your bet is too low.');
+					}
+					else{
+						if(bet > parseInt(document.getElementsByName('money')[0].value)){
+							//bet too large
+							alert('You do not have enough money to place a bet this large.');
+						}		
+					}
+				}
+			}
+			
+			function checkMoney() {
+				var money = parseInt(document.getElementsByName('money')[0].value)
+				//check if the user entered a valid numerical value for money
+				if (isNaN(money)){
+					//money is not a number
+					alert('Please enter money as a numerical value.');
+				}
+				else {
+					if (money <= 0){
+						// money entered was too low
+						alert('Please add a valid amount of money to the game.');
+					}
+				}
+			}
+	</script>
     </body>
 </html>
 
