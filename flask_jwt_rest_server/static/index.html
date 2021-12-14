@@ -4,16 +4,11 @@
 
 #title1 {
 position: fixed;
-color: blue;
+color: white;
 left:35%;
 top:1%;
 padding:2px;
-}
-
-@import "bourbon";
-
-body {
-	background: #eee !important;	
+text-decoration: underline;
 }
 
 #signDisplay{
@@ -118,12 +113,20 @@ display:none;
 top:48%;
 left:2%;
 }
+#body2 {
+position: absolute;
+width: 100%;
+height: 100%;
+background-image: radial-gradient(white, lightblue, blue);
+}
+
 </style>
 
     <head>
 	     <script src="https://code.jquery.com/jquery-3.6.0.js" 
 		     integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
 	     <script src="/static/cis444.js"></script>
+	     <script src="/static/index.js"></script>
 	     <!-- Required meta tags -->
     	     <meta charset="utf-8">
     	     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -132,6 +135,7 @@ left:2%;
         		integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
     </head>
     <body>
+	<div id="body2"></div>
 	<h1 id=title1>Akayla's Meal Maker</h1>      
 	<!-- signup setup -->
 		<div class="container2" id="signDisplay">
@@ -157,9 +161,9 @@ left:2%;
 	    <div id="stage" style="display=none;">
 		<table align="center">
 			<tr>
-				<td><img id="SlotImage1" src="https://www.sourcecodester.com/sites/default/files/question.jpg" alt="Slot Image #1" style="Width:300px; Height:340px;"></td>
-				<td><img id="SlotImage2" src="https://www.sourcecodester.com/sites/default/files/question.jpg" alt="Slot Image #2" style="Width:300px; Height:340px;"></td>
-				<td><img id="SlotImage3" src="https://www.sourcecodester.com/sites/default/files/question.jpg" alt="Slot Image #3" style="Width:300px; Height:340px;"></td>
+				<td><img id="SlotImage1" name="slot1Img" src="https://www.sourcecodester.com/sites/default/files/question.jpg" alt="Slot Image #1" style="Width:300px; Height:340px;"></td>
+				<td><img id="SlotImage2" name="slot2Img" src="https://www.sourcecodester.com/sites/default/files/question.jpg" alt="Slot Image #2" style="Width:300px; Height:340px;"></td>
+				<td><img id="SlotImage3" name="slot3Img" src="https://www.sourcecodester.com/sites/default/files/question.jpg" alt="Slot Image #3" style="Width:300px; Height:340px;"></td>
 			</tr>
 		</table>
 	    </div>
@@ -171,29 +175,12 @@ left:2%;
 	    
 	    <label for="vegitarian" id="vLabel">Vegitarian:</label> 
             <input type="checkbox" id="vegitarian" value="0">
-	    <div id="mProtein">
-	    	<div id="chicken">
-	    		<img id="murl1" style="display: none;">
-	    		<input id="mn1" name="pname" type="hidden" value="">
-	    	</div>
-	    	<div id="steak">
-			<img id="murl2" style="display: none;">
-	    		<input id="mn2" name="pname" type="hidden" value="">
-	    	</div>
-	    	<div id="sausage">
-			<img id="murl3" style="display: none;">
-            		<input id="mn3" name="pname" type="hidden" value="">
-	    	</div>
-	    	<div id="meatloaf">
-			<img id="murl4" style="display: none;">
-	    		<input id="mn4" name="pname" type="hidden" value="">
-	    	</div>
-	    	<div id="lamb">
-			<img id="murl5" style="display: none;">
-            		<input id="mn5" name="pname" type="hidden" value="">
-	   	</div>
-	    </div>
-
+	    
+	    <img id="murl1" style="display: none;">
+	    <img id="murl2" style="display: none;">
+	    <img id="murl3" style="display: none;">
+       	    <img id="murl4" style="display: none;">
+	    <img id="murl5" style="display: none;">
 	    <img id="vPurl1" style="display: none;">
 	    <img id="vPurl2" style="display: none;">
 	    <img id="vPurl3" style="display: none;">
@@ -209,309 +196,11 @@ left:2%;
 	    <img id="curl3" style="display: none;">
 	    <img id="curl4" style="display: none;">
 	    <img id="curl5" style="display: none;">
-
+	    <div id="grad1" style="display: none;"></div>
 	    <button id="refreshButton" type="button" style="display: none;" onclick= "getLoginPage()">Back To Login</button>
 	    <button id="checkOut" class="button1" type=submit onclick="return wantMeal()">I Want This Meal</button>
 	    <h2 id="thanks">UMMMMMM, that meal sounds good. I added it to your database: Meals table. Have a nice feast!</h2>
-	    <script>
-                function send_form(){
-                        $.post("/open_api/login", { "username":$('#user').val(), "password":$('#password').val()},
-                                function(data, textStatus) {
-                                        //this gets called when browser receives response from server
-                                        console.log(data.token);
-                                        jwt = data.token;
-                                        console.log(data);
-                                        noError();
-                                        goToMainPage();
-                                        //make secure call with the jwt
-
-                                }, "json").fail( function(response) {
-                                        //this gets called if the server throws an error
-                                        console.log("error");
-                                        displayError();
-                                        console.log(response);
-                                });
-                        return false;
-                }
-		
-		function displayError(){
-                        var loginError = document.getElementById("loginError");
-                        loginError.style.display = "block";
-                }
-                
-                function noError(){
-                        var loginError = document.getElementById("loginError");
-                        loginError.style.display = "none";
-
-                }
-                function goToMainPage(){
-                        var signDisplay = document.getElementById("signDisplay");
-                        signDisplay.style.display = "none";
-			var stage = document.getElementById("stage");
-                        stage.style.display = "block";
-			var spin = document.getElementById("spin");
-                        spin.style.display = "block";
-			var protein = document.getElementById("protein");
-                        protein.style.display = "block";
-			var veggie = document.getElementById("veggie");
-                        veggie.style.display = "block";
-			var carbs = document.getElementById("carbs");
-                        carbs.style.display = "block";
-			var again = document.getElementById("again");
-                        again.style.display = "none";
-			var veg = document.getElementById("vegitarian");
-                        veg.style.display = "block"
-			var vLabel = document.getElementById("vLabel");
-                        vLabel.style.display = "block"
-			var refreshButton = document.getElementById("refreshButton");
-                        refreshButton.style.display = "block";
-			var checkOut = document.getElementById("checkOut");
-                        checkOut.style.display = "none";
-			var thanks = document.getElementById("thanks");
-                        thanks.style.display = "none";
-		}
-		function restyle()
-		{
-                        var signupContainer = document.getElementById("signDisplay");
-                        signupContainer.style.display = "none";
-			var refreshButton = document.getElementById("refreshButton");
-			refreshButton.style.display = "block";
-			var stage = document.getElementById("stage");
-                        stage.style.display = "none";
-			var spin = document.getElementById("spin");
-                        spin.style.display = "none";
-			var protein = document.getElementById("protein");
-                        protein.style.display = "none";
-                        var veggie = document.getElementById("veggie");
-                        veggie.style.display = "none";
-                        var carbs = document.getElementById("carbs");
-                        carbs.style.display = "none";
-			var again = document.getElementById("again");
-                        again.style.display = "none";
-			var veg = document.getElementById("vegitarian");
-                        veg.style.display = "none"
-			var vLabel = document.getElementById("vLabel");
-                        vLabel.style.display = "none"
-			var checkOut = document.getElementById("checkOut");
-                        checkOut.style.display = "none";
-			var thanks = document.getElementById("thanks");
-                        thanks.style.display = "block";
-		}
-		function getLoginPage()
-		{
-                        var signupContainer = document.getElementById("signDisplay");
-                        signupContainer.style.display = "block";
-                        var refreshButton = document.getElementById("refreshButton");
-                        refreshButton.style.display = "none";
-			var stage = document.getElementById("stage");
-                        stage.style.display = "none";
-			var spin = document.getElementById("spin");
-                        spin.style.display = "none";
-			var protein = document.getElementById("protein");
-                        protein.style.display = "none";
-                        var veggie = document.getElementById("veggie");
-                        veggie.style.display = "none";
-                        var carbs = document.getElementById("carbs");
-                        carbs.style.display = "none";
-			var again = document.getElementById("again");
-                        again.style.display = "none";
-			var veg = document.getElementById("vegitarian");
-                        veg.style.display = "none";
-			var vLabel = document.getElementById("vLabel");
-                        vLabel.style.display = "none";
-			var checkOut = document.getElementById("checkOut");
-                        checkOut.style.display = "none";
-			var thanks = document.getElementById("thanks");
-                        thanks.style.display = "none";
-			document.getElementById('SlotImage1').src = "https://www.sourcecodester.com/sites/default/files/question.jpg";
-                        document.getElementById('SlotImage2').src = "https://www.sourcecodester.com/sites/default/files/question.jpg";
-                        document.getElementById('SlotImage3').src = "https://www.sourcecodester.com/sites/default/files/question.jpg";
-		}
-		function get_mProtein(){
-                        //make secure call with the jwt
-                        secure_get_with_token("/secure_api/get_mProtein",{ },
-                                 function(data){
-                                         console.log("got meats");
-                                         console.log(data)
-                                         var arrayLength = 5;
-                                         var allMeat = [arrayLength];
-                                         for (var i = 0; i < data.meat.length; i++) {
-                                                var object = data.meat[i];
-                                                allMeat[i] = object;
-                                                for (property in object) {
-                                                        var value = object[property];
-                                                }
-                                        }
-                                        document.getElementById('murl1').setAttribute("src", allMeat[0][1]);
-                                        document.getElementById('murl2').setAttribute("src", allMeat[1][1]);
-                                        document.getElementById('murl3').setAttribute("src", allMeat[2][1]);
-                                        document.getElementById('murl4').setAttribute("src", allMeat[3][1]);
-                                        document.getElementById('murl5').setAttribute("src", allMeat[4][1]);
-
-                                        //var name1 = document.getElementById('mname1').innerHTML = allMeat[0][0];
-                                        //var name2 = document.getElementById('mname2').innerHTML = allMeat[1][0];
-                                        //var name3 = document.getElementById('mname3').innerHTML = allMeat[2][0];
-                                        //var name4 = document.getElementById('mname4').innerHTML = allMeat[3][0];
-                                        //var name5 = document.getElementById('mname5').innerHTML = allMeat[4][0];
-                                       	$('#mn1').val(allMeat[0][0]);
-                                        $('#mn2').val(allMeat[1][0]);
-                                        $('#mn3').val(allMeat[2][0]);
-                                        $('#mn4').val(allMeat[3][0]);
-                                        $('#mn5').val(allMeat[4][0]);
-					
-                                 },
-                                 function(err){
-                                         console.log(err)
-                                 });
-                }
-		function get_vProtein(){
-			secure_get_with_token("/secure_api/get_vProtein",{ }, 
-                                                function(data){
-                                                        console.log("got vProtein"); 
-                                                        console.log(data)
-                                                        var arrayLength = 5;
-                                                        var allvProtein = [arrayLength];
-                                                        for (var i = 0; i < data.vegPro.length; i++) {
-                                                                var object = data.vegPro[i];
-                                                                allvProtein[i] = object;
-                                                                for (property in object) {
-                                                                        var value = object[property];
-                                                                }       
-                                                        }
-                                                        document.getElementById('vPurl1').setAttribute("src", allvProtein[0][1]);
-                                                        document.getElementById('vPurl2').setAttribute("src", allvProtein[1][1]);
-                                                        document.getElementById('vPurl3').setAttribute("src", allvProtein[2][1]);
-                                                        document.getElementById('vPurl4').setAttribute("src", allvProtein[3][1]);
-                                                        document.getElementById('vPurl5').setAttribute("src", allvProtein[4][1]);
-                                                },
-                                                function(err){ 
-                                                        console.log(err) 
-                                        });
-		}
-		function get_veggie(){
-			secure_get_with_token("/secure_api/get_veggie",{ }, 
-                                                function(data){
-                                                        console.log("got veggies"); 
-                                                        console.log(data)
-                                                        var arrayLength = 5;
-                                                        var allVeggies = [arrayLength];
-                                                        for (var i = 0; i < data.veg.length; i++) {
-                                                                var object = data.veg[i];
-                                                                allVeggies[i] = object;
-                                                                for (property in object) {
-                                                                        var value = object[property];
-                                                                }       
-                                                        }
-                                                        document.getElementById('vegurl1').setAttribute("src", allVeggies[0][1]);
-                                                        document.getElementById('vegurl2').setAttribute("src", allVeggies[1][1]);
-                                                        document.getElementById('vegurl3').setAttribute("src", allVeggies[2][1]);
-                                                        document.getElementById('vegurl4').setAttribute("src", allVeggies[3][1]);
-                                                        document.getElementById('vegurl5').setAttribute("src", allVeggies[4][1]);
-                                                },
-                                                function(err){ 
-                                                        console.log(err) 
-                                        });
-		}
-		function get_carbs(){
-			secure_get_with_token("/secure_api/get_carbs",{ }, 
-                                                function(data){
-                                                        console.log("got carbs"); 
-                                                        console.log(data)
-                                                        var arrayLength = 5;
-                                                        var allCarbs = [arrayLength];
-                                                        for (var i = 0; i < data.carbs.length; i++) {
-                                                                var object = data.carbs[i];
-                                                                allCarbs[i] = object;
-                                                                for (property in object) {
-                                                                        var value = object[property];
-                                                                }       
-                                                        }
-                                                        document.getElementById('curl1').setAttribute("src", allCarbs[0][1]);
-                                                        document.getElementById('curl2').setAttribute("src", allCarbs[1][1]);
-                                                        document.getElementById('curl3').setAttribute("src", allCarbs[2][1]);
-                                                        document.getElementById('curl4').setAttribute("src", allCarbs[3][1]);
-                                                        document.getElementById('curl5').setAttribute("src", allCarbs[4][1]);
-                                                },
-                                                function(err){ 
-                                                        console.log(err) 
-                                        });
-		}
-		function DoSpin() 
-		{
-				var checkBox = document.getElementById("vegitarian");
-				if(checkBox.checked == true){
-					get_vProtein();
-                                        var edamame = document.getElementById("vPurl1");
-                                        var lentils = document.getElementById("vPurl2");
-                                        var tofu = document.getElementById("vPurl3");
-                                        var beans = document.getElementById("vPurl4");
-                                        var seitan = document.getElementById("vPurl5");
-                                        var slot1images = [ edamame, lentils, tofu, beans,seitan];
-                                        //keys: 0=edamame, 1=lentils , 2=tofu , 3=beans, 4=seitan
-                                }
-				else {
-					get_mProtein();
-					var chicken = document.getElementById("murl1");
-                                        var steak = document.getElementById("murl2");
-                                        var sausage = document.getElementById("murl3");
-                                        var meatloaf = document.getElementById("murl4");
-                                        var lamb = document.getElementById("murl5");
-					var slot1images = [ chicken, steak, sausage, meatloaf,lamb];
-					//keys: 0=chicken, 1=steak , 2=sausage , 3=meatloaf, 4=lamb
-				}
-				get_veggie();
-				var broc = document.getElementById("vegurl1");
-                                var carrot = document.getElementById("vegurl2");
-                                var greenBean = document.getElementById("vegurl3");
-                                var eggplant = document.getElementById("vegurl4");
-                                var spinach = document.getElementById("vegurl5");
-                                var slot2images = [broc,carrot,greenBean,eggplant,spinach];
-				//keys: 0=broc, 1=carrot, 2=greenBean , 3=eggplant, 4=spinach
-				
-
-				get_carbs();
-                                var mac = document.getElementById("curl1");
-                                var fries = document.getElementById("curl2");
-                                var rice = document.getElementById("curl3");
-                                var noodles = document.getElementById("curl4");
-                                var bread = document.getElementById("curl5");
-                                var slot3images = [mac,fries,rice,noodles,bread];
-				//keys: 0=mac, 1=fries , 2=rice , 3=noodles, 4=bread
-			
-				var slotImage1 = Math.floor((Math.random() * 5));
-				var slotImage2 = Math.floor((Math.random() * 5));
-				var slotImage3 = Math.floor((Math.random() * 5));
-				
-				var img1 = slot1images[slotImage1];
-				var img2 = slot2images[slotImage2];
-				var img3 = slot3images[slotImage3];
-
-				document.getElementById('SlotImage1').src = img1.src;
-                                document.getElementById('SlotImage2').src = img2.src;
-                                document.getElementById('SlotImage3').src = img3.src;
-				
-				
-			        		
-				var again = document.getElementById("again");
-                        	again.style.display = "block";
-				var checkOut = document.getElementById("checkOut");
-                        	checkOut.style.display = "block";
-		}
-	
-		function wantMeal() 
-		{
-
-			secure_get_with_token("/secure_api/add_meals",{"pname":$('#bn2').val(), "vname":$('#vn2').val(), "cname":$('#cn1').val()},
-                                        function(data){
-                                   		console.log(data);
-						restyle();
-                                        },
-                                        function(err){ 
-                                                console.log(err) 
-                                 	});
-			return false;
-                }
-
+	<script>
 	</script>
     </body>
 </html>
