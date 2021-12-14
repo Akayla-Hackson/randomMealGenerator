@@ -34,9 +34,6 @@
 		}
                 function goToMainPage(){
 			reset();
-			console.log(document.getElementById('SlotImage1').src);
-			console.log(document.getElementById('SlotImage2').src);
-			console.log(document.getElementById('SlotImage3').src);
                         var signDisplay = document.getElementById("signDisplay");
                         signDisplay.style.display = "none";
                         var stage = document.getElementById("stage");
@@ -92,10 +89,8 @@
                         thanks.style.display = "block";
 			var body2 = document.getElementById("body2");
                         body2.style.display = "block";
-			document.getElementById('SlotImage1').src = "https://www.sourcecodester.com/sites/default/files/question.jpg";
-                        document.getElementById('SlotImage2').src = "https://www.sourcecodester.com/sites/default/files/question.jpg";
-                        document.getElementById('SlotImage3').src = "https://www.sourcecodester.com/sites/default/files/question.jpg";
-                }
+                	reset();
+		}
                 function getLoginPage()
                 {
 			reset();
@@ -125,9 +120,6 @@
                         thanks.style.display = "none";
 			var body2 = document.getElementById("body2");
                         body2.style.display = "block";
-                        document.getElementById('SlotImage1').src = "https://www.sourcecodester.com/sites/default/files/question.jpg";
-                        document.getElementById('SlotImage2').src = "https://www.sourcecodester.com/sites/default/files/question.jpg";
-                        document.getElementById('SlotImage3').src = "https://www.sourcecodester.com/sites/default/files/question.jpg";
                 }
                 function get_mProtein(){
                         //make secure call with the jwt
