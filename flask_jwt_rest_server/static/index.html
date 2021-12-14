@@ -5,7 +5,7 @@
 #title1 {
 position: fixed;
 color: blue;
-left:36%;
+left:35%;
 top:1%;
 padding:2px;
 }
@@ -25,7 +25,7 @@ body {
     padding: 20px;
     border-left: 5px solid #009688;
     box-shadow: 0px 0px 0px 0px #3f51b5;
-    left: 35%;
+    left: 33%;
     top:13%;
 }
 .login>.row>h2 {
@@ -44,11 +44,80 @@ body {
 }
 #refreshButton {
 position: fixed;
-top: 20%;
-left:70%;
+top: 7%;
+left:85%;
 padding: 10px;
 }
 
+#stage {
+top:18%;
+left:17%;
+position:fixed;
+display: none;
+border:1px solid black;
+}
+#spin {
+position: fixed;
+display: none;
+left:46%;
+top:68%;
+}
+#protein {
+position:fixed;
+left:24%;
+top: 12%;
+display: none;
+}
+#veggie {
+position:fixed;
+left:46%;
+top: 12%;
+display: none;
+}
+#carbs {
+position:fixed;
+left:69%;
+top: 12%;
+display: none;
+}
+#again {
+position: fixed;
+top:74%;
+left:36%;
+display:none;
+font-family: "Times New Roman", Times, serif;
+}
+#vegitarian {
+position:fixed;
+left:10%;
+top:50%;
+display:none;
+}
+#vLabel {
+position:fixed;
+left:3%;
+top:49%;
+display:none;
+}
+#checkOut {
+position:fixed;
+display:none;
+top:82%;
+left:45%;
+color: black;
+width: 150px;
+height: 40px;
+border-radius: 12px;
+}
+.button1:hover {
+background-color: red;
+}
+#thanks {
+position:fixed;
+display:none;
+top:48%;
+left:2%;
+}
 </style>
 
     <head>
@@ -63,7 +132,7 @@ padding: 10px;
         		integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
     </head>
     <body>
-	<h1 id=title1>Akayla's Meal Helper</h1>      
+	<h1 id=title1>Akayla's Meal Maker</h1>      
 	<!-- signup setup -->
 		<div class="container2" id="signDisplay">
                         <div class="login">
@@ -85,32 +154,66 @@ padding: 10px;
 			</div>
 		</div>
 
-
-		<table align="center" id="stage" style="display=none;">
+	    <div id="stage" style="display=none;">
+		<table align="center">
 			<tr>
-				<td><img id="SlotImage1" src="bar.jpg" alt="Slot Image #1" style="Width:102px; Height:132px;"></td>
-				<td><img id="SlotImage2" src="bar.jpg" alt="Slot Image #2" style="Width:102px; Height:132px;"></td>
-				<td><img id="SlotImage3" src="bar.jpg" alt="Slot Image #3" style="Width:102px; Height:132px;"></td>
-			</tr>
-			<tr>
-				<td></td>
-				<td><input type="button" onclick="DoSpin()" value="Click To Spin"></td>
-				<td></td>
-			</tr>
-			<tr>
-				<td>Money:</td>
-				<td><input type="text" onchange="checkMoney()" style="width: 100px" name="money" value="20"></td>
-				<td></td>
-			</tr>
-			<tr>
-				<td>Bet:</td>
-				<td><input type="text" onchange="checkBet()" style="width: 100px" name="bet" value="1"></td>
-				<td></td>
+				<td><img id="SlotImage1" src="https://www.sourcecodester.com/sites/default/files/question.jpg" alt="Slot Image #1" style="Width:300px; Height:340px;"></td>
+				<td><img id="SlotImage2" src="https://www.sourcecodester.com/sites/default/files/question.jpg" alt="Slot Image #2" style="Width:300px; Height:340px;"></td>
+				<td><img id="SlotImage3" src="https://www.sourcecodester.com/sites/default/files/question.jpg" alt="Slot Image #3" style="Width:300px; Height:340px;"></td>
 			</tr>
 		</table>
+	    </div>
+	    <input id="spin" type="button" onclick="DoSpin()" value="Click To Spin">
+            <h2 id="protein">Protein</h2>
+	    <h2 id="veggie">Veggie</h2>
+	    <h2 id="carbs">Carbs</h2>
+	    <h3 id="again">Meal doesn't satisfy? Spin again :)</h3>
+	    
+	    <label for="vegitarian" id="vLabel">Vegitarian:</label> 
+            <input type="checkbox" id="vegitarian" value="0">
+	    <div id="mProtein">
+	    	<div id="chicken">
+	    		<img id="murl1" style="display: none;">
+	    		<input id="mn1" name="pname" type="hidden" value="">
+	    	</div>
+	    	<div id="steak">
+			<img id="murl2" style="display: none;">
+	    		<input id="mn2" name="pname" type="hidden" value="">
+	    	</div>
+	    	<div id="sausage">
+			<img id="murl3" style="display: none;">
+            		<input id="mn3" name="pname" type="hidden" value="">
+	    	</div>
+	    	<div id="meatloaf">
+			<img id="murl4" style="display: none;">
+	    		<input id="mn4" name="pname" type="hidden" value="">
+	    	</div>
+	    	<div id="lamb">
+			<img id="murl5" style="display: none;">
+            		<input id="mn5" name="pname" type="hidden" value="">
+	   	</div>
+	    </div>
 
-		<button id="refreshButton" type="button" style="display: none;" onclick= "getLoginPage()">Back To Login</button>
-	<script>
+	    <img id="vPurl1" style="display: none;">
+	    <img id="vPurl2" style="display: none;">
+	    <img id="vPurl3" style="display: none;">
+	    <img id="vPurl4" style="display: none;">
+	    <img id="vPurl5" style="display: none;">
+	    <img id="vegurl1" style="display: none;">
+	    <img id="vegurl2" style="display: none;">
+	    <img id="vegurl3" style="display: none;">
+	    <img id="vegurl4" style="display: none;">
+	    <img id="vegurl5" style="display: none;">
+	    <img id="curl1" style="display: none;">
+	    <img id="curl2" style="display: none;">
+	    <img id="curl3" style="display: none;">
+	    <img id="curl4" style="display: none;">
+	    <img id="curl5" style="display: none;">
+
+	    <button id="refreshButton" type="button" style="display: none;" onclick= "getLoginPage()">Back To Login</button>
+	    <button id="checkOut" class="button1" type=submit onclick="return wantMeal()">I Want This Meal</button>
+	    <h2 id="thanks">UMMMMMM, that meal sounds good. I added it to your database: Meals table. Have a nice feast!</h2>
+	    <script>
                 function send_form(){
                         $.post("/open_api/login", { "username":$('#user').val(), "password":$('#password').val()},
                                 function(data, textStatus) {
@@ -130,8 +233,7 @@ padding: 10px;
                                 });
                         return false;
                 }
-
-                
+		
 		function displayError(){
                         var loginError = document.getElementById("loginError");
                         loginError.style.display = "block";
@@ -147,6 +249,26 @@ padding: 10px;
                         signDisplay.style.display = "none";
 			var stage = document.getElementById("stage");
                         stage.style.display = "block";
+			var spin = document.getElementById("spin");
+                        spin.style.display = "block";
+			var protein = document.getElementById("protein");
+                        protein.style.display = "block";
+			var veggie = document.getElementById("veggie");
+                        veggie.style.display = "block";
+			var carbs = document.getElementById("carbs");
+                        carbs.style.display = "block";
+			var again = document.getElementById("again");
+                        again.style.display = "none";
+			var veg = document.getElementById("vegitarian");
+                        veg.style.display = "block"
+			var vLabel = document.getElementById("vLabel");
+                        vLabel.style.display = "block"
+			var refreshButton = document.getElementById("refreshButton");
+                        refreshButton.style.display = "block";
+			var checkOut = document.getElementById("checkOut");
+                        checkOut.style.display = "none";
+			var thanks = document.getElementById("thanks");
+                        thanks.style.display = "none";
 		}
 		function restyle()
 		{
@@ -156,6 +278,24 @@ padding: 10px;
 			refreshButton.style.display = "block";
 			var stage = document.getElementById("stage");
                         stage.style.display = "none";
+			var spin = document.getElementById("spin");
+                        spin.style.display = "none";
+			var protein = document.getElementById("protein");
+                        protein.style.display = "none";
+                        var veggie = document.getElementById("veggie");
+                        veggie.style.display = "none";
+                        var carbs = document.getElementById("carbs");
+                        carbs.style.display = "none";
+			var again = document.getElementById("again");
+                        again.style.display = "none";
+			var veg = document.getElementById("vegitarian");
+                        veg.style.display = "none"
+			var vLabel = document.getElementById("vLabel");
+                        vLabel.style.display = "none"
+			var checkOut = document.getElementById("checkOut");
+                        checkOut.style.display = "none";
+			var thanks = document.getElementById("thanks");
+                        thanks.style.display = "block";
 		}
 		function getLoginPage()
 		{
@@ -165,77 +305,213 @@ padding: 10px;
                         refreshButton.style.display = "none";
 			var stage = document.getElementById("stage");
                         stage.style.display = "none";
+			var spin = document.getElementById("spin");
+                        spin.style.display = "none";
+			var protein = document.getElementById("protein");
+                        protein.style.display = "none";
+                        var veggie = document.getElementById("veggie");
+                        veggie.style.display = "none";
+                        var carbs = document.getElementById("carbs");
+                        carbs.style.display = "none";
+			var again = document.getElementById("again");
+                        again.style.display = "none";
+			var veg = document.getElementById("vegitarian");
+                        veg.style.display = "none";
+			var vLabel = document.getElementById("vLabel");
+                        vLabel.style.display = "none";
+			var checkOut = document.getElementById("checkOut");
+                        checkOut.style.display = "none";
+			var thanks = document.getElementById("thanks");
+                        thanks.style.display = "none";
+			document.getElementById('SlotImage1').src = "https://www.sourcecodester.com/sites/default/files/question.jpg";
+                        document.getElementById('SlotImage2').src = "https://www.sourcecodester.com/sites/default/files/question.jpg";
+                        document.getElementById('SlotImage3').src = "https://www.sourcecodester.com/sites/default/files/question.jpg";
 		}
-		function DoSpin() {
-				//All three slot’s images should be randomly selected 
-				//and displayed on the page.
-				//If all three images match, alert the user of a win.
-				
-				var money = parseInt(document.getElementsByName('money')[0].value);
-				var bet = parseInt(document.getElementsByName('bet')[0].value);
-				var slotImages = ["bar.jpg", "cherry.jpg", "donut.jpg", "lemon.jpg"];
-				
-				if (money > 0) {
-					document.getElementsByName('money')[0].value = money - bet;
-					//keys: 0=bar, 1=cherry, 2=donut, 3=lemon
-					var slotImage1 = Math.floor((Math.random() * 4));
-					var slotImage2 = Math.floor((Math.random() * 4));
-					var slotImage3 = Math.floor((Math.random() * 4));
-				
-					document.getElementById('SlotImage1').src = slotImages[slotImage1];
-					document.getElementById('SlotImage2').src = slotImages[slotImage2];
-					document.getElementById('SlotImage3').src = slotImages[slotImage3];
-			
-					CheckWinner(slotImage1,slotImage2,slotImage3,money,bet);
-				}
+		function get_mProtein(){
+                        //make secure call with the jwt
+                        secure_get_with_token("/secure_api/get_mProtein",{ },
+                                 function(data){
+                                         console.log("got meats");
+                                         console.log(data)
+                                         var arrayLength = 5;
+                                         var allMeat = [arrayLength];
+                                         for (var i = 0; i < data.meat.length; i++) {
+                                                var object = data.meat[i];
+                                                allMeat[i] = object;
+                                                for (property in object) {
+                                                        var value = object[property];
+                                                }
+                                        }
+                                        document.getElementById('murl1').setAttribute("src", allMeat[0][1]);
+                                        document.getElementById('murl2').setAttribute("src", allMeat[1][1]);
+                                        document.getElementById('murl3').setAttribute("src", allMeat[2][1]);
+                                        document.getElementById('murl4').setAttribute("src", allMeat[3][1]);
+                                        document.getElementById('murl5').setAttribute("src", allMeat[4][1]);
+
+                                        //var name1 = document.getElementById('mname1').innerHTML = allMeat[0][0];
+                                        //var name2 = document.getElementById('mname2').innerHTML = allMeat[1][0];
+                                        //var name3 = document.getElementById('mname3').innerHTML = allMeat[2][0];
+                                        //var name4 = document.getElementById('mname4').innerHTML = allMeat[3][0];
+                                        //var name5 = document.getElementById('mname5').innerHTML = allMeat[4][0];
+                                       	$('#mn1').val(allMeat[0][0]);
+                                        $('#mn2').val(allMeat[1][0]);
+                                        $('#mn3').val(allMeat[2][0]);
+                                        $('#mn4').val(allMeat[3][0]);
+                                        $('#mn5').val(allMeat[4][0]);
+					
+                                 },
+                                 function(err){
+                                         console.log(err)
+                                 });
+                }
+		function get_vProtein(){
+			secure_get_with_token("/secure_api/get_vProtein",{ }, 
+                                                function(data){
+                                                        console.log("got vProtein"); 
+                                                        console.log(data)
+                                                        var arrayLength = 5;
+                                                        var allvProtein = [arrayLength];
+                                                        for (var i = 0; i < data.vegPro.length; i++) {
+                                                                var object = data.vegPro[i];
+                                                                allvProtein[i] = object;
+                                                                for (property in object) {
+                                                                        var value = object[property];
+                                                                }       
+                                                        }
+                                                        document.getElementById('vPurl1').setAttribute("src", allvProtein[0][1]);
+                                                        document.getElementById('vPurl2').setAttribute("src", allvProtein[1][1]);
+                                                        document.getElementById('vPurl3').setAttribute("src", allvProtein[2][1]);
+                                                        document.getElementById('vPurl4').setAttribute("src", allvProtein[3][1]);
+                                                        document.getElementById('vPurl5').setAttribute("src", allvProtein[4][1]);
+                                                },
+                                                function(err){ 
+                                                        console.log(err) 
+                                        });
+		}
+		function get_veggie(){
+			secure_get_with_token("/secure_api/get_veggie",{ }, 
+                                                function(data){
+                                                        console.log("got veggies"); 
+                                                        console.log(data)
+                                                        var arrayLength = 5;
+                                                        var allVeggies = [arrayLength];
+                                                        for (var i = 0; i < data.veg.length; i++) {
+                                                                var object = data.veg[i];
+                                                                allVeggies[i] = object;
+                                                                for (property in object) {
+                                                                        var value = object[property];
+                                                                }       
+                                                        }
+                                                        document.getElementById('vegurl1').setAttribute("src", allVeggies[0][1]);
+                                                        document.getElementById('vegurl2').setAttribute("src", allVeggies[1][1]);
+                                                        document.getElementById('vegurl3').setAttribute("src", allVeggies[2][1]);
+                                                        document.getElementById('vegurl4').setAttribute("src", allVeggies[3][1]);
+                                                        document.getElementById('vegurl5').setAttribute("src", allVeggies[4][1]);
+                                                },
+                                                function(err){ 
+                                                        console.log(err) 
+                                        });
+		}
+		function get_carbs(){
+			secure_get_with_token("/secure_api/get_carbs",{ }, 
+                                                function(data){
+                                                        console.log("got carbs"); 
+                                                        console.log(data)
+                                                        var arrayLength = 5;
+                                                        var allCarbs = [arrayLength];
+                                                        for (var i = 0; i < data.carbs.length; i++) {
+                                                                var object = data.carbs[i];
+                                                                allCarbs[i] = object;
+                                                                for (property in object) {
+                                                                        var value = object[property];
+                                                                }       
+                                                        }
+                                                        document.getElementById('curl1').setAttribute("src", allCarbs[0][1]);
+                                                        document.getElementById('curl2').setAttribute("src", allCarbs[1][1]);
+                                                        document.getElementById('curl3').setAttribute("src", allCarbs[2][1]);
+                                                        document.getElementById('curl4').setAttribute("src", allCarbs[3][1]);
+                                                        document.getElementById('curl5').setAttribute("src", allCarbs[4][1]);
+                                                },
+                                                function(err){ 
+                                                        console.log(err) 
+                                        });
+		}
+		function DoSpin() 
+		{
+				var checkBox = document.getElementById("vegitarian");
+				if(checkBox.checked == true){
+					get_vProtein();
+                                        var edamame = document.getElementById("vPurl1");
+                                        var lentils = document.getElementById("vPurl2");
+                                        var tofu = document.getElementById("vPurl3");
+                                        var beans = document.getElementById("vPurl4");
+                                        var seitan = document.getElementById("vPurl5");
+                                        var slot1images = [ edamame, lentils, tofu, beans,seitan];
+                                        //keys: 0=edamame, 1=lentils , 2=tofu , 3=beans, 4=seitan
+                                }
 				else {
-					//out of money
-					alert('You lose. Enter more money to keep playing.');
-				}	
-			}
+					get_mProtein();
+					var chicken = document.getElementById("murl1");
+                                        var steak = document.getElementById("murl2");
+                                        var sausage = document.getElementById("murl3");
+                                        var meatloaf = document.getElementById("murl4");
+                                        var lamb = document.getElementById("murl5");
+					var slot1images = [ chicken, steak, sausage, meatloaf,lamb];
+					//keys: 0=chicken, 1=steak , 2=sausage , 3=meatloaf, 4=lamb
+				}
+				get_veggie();
+				var broc = document.getElementById("vegurl1");
+                                var carrot = document.getElementById("vegurl2");
+                                var greenBean = document.getElementById("vegurl3");
+                                var eggplant = document.getElementById("vegurl4");
+                                var spinach = document.getElementById("vegurl5");
+                                var slot2images = [broc,carrot,greenBean,eggplant,spinach];
+				//keys: 0=broc, 1=carrot, 2=greenBean , 3=eggplant, 4=spinach
+				
+
+				get_carbs();
+                                var mac = document.getElementById("curl1");
+                                var fries = document.getElementById("curl2");
+                                var rice = document.getElementById("curl3");
+                                var noodles = document.getElementById("curl4");
+                                var bread = document.getElementById("curl5");
+                                var slot3images = [mac,fries,rice,noodles,bread];
+				//keys: 0=mac, 1=fries , 2=rice , 3=noodles, 4=bread
 			
-			function CheckWinner(x,y,z,money,bet) {
-				if (x == y && x == z) {
-					document.getElementsByName('money')[0].value = money + (13 * bet);
-					alert('YOU WIN!');
-				}
-			}
-			
-			function checkBet() {
-				var bet = parseInt(document.getElementsByName('bet')[0].value)
-				//check if the user entered a valid numerical bet
-				if (isNaN(bet)){
-					//bet is not a number
-					alert('Please enter bet as a numerical value.');
-				}
-				else {
-					if (bet <= 0){
-						// bet too low
-						alert('Your bet is too low.');
-					}
-					else{
-						if(bet > parseInt(document.getElementsByName('money')[0].value)){
-							//bet too large
-							alert('You do not have enough money to place a bet this large.');
-						}		
-					}
-				}
-			}
-			
-			function checkMoney() {
-				var money = parseInt(document.getElementsByName('money')[0].value)
-				//check if the user entered a valid numerical value for money
-				if (isNaN(money)){
-					//money is not a number
-					alert('Please enter money as a numerical value.');
-				}
-				else {
-					if (money <= 0){
-						// money entered was too low
-						alert('Please add a valid amount of money to the game.');
-					}
-				}
-			}
+				var slotImage1 = Math.floor((Math.random() * 5));
+				var slotImage2 = Math.floor((Math.random() * 5));
+				var slotImage3 = Math.floor((Math.random() * 5));
+				
+				var img1 = slot1images[slotImage1];
+				var img2 = slot2images[slotImage2];
+				var img3 = slot3images[slotImage3];
+
+				document.getElementById('SlotImage1').src = img1.src;
+                                document.getElementById('SlotImage2').src = img2.src;
+                                document.getElementById('SlotImage3').src = img3.src;
+				
+				
+			        		
+				var again = document.getElementById("again");
+                        	again.style.display = "block";
+				var checkOut = document.getElementById("checkOut");
+                        	checkOut.style.display = "block";
+		}
+	
+		function wantMeal() 
+		{
+
+			secure_get_with_token("/secure_api/add_meals",{"pname":$('#bn2').val(), "vname":$('#vn2').val(), "cname":$('#cn1').val()},
+                                        function(data){
+                                   		console.log(data);
+						restyle();
+                                        },
+                                        function(err){ 
+                                                console.log(err) 
+                                 	});
+			return false;
+                }
+
 	</script>
     </body>
 </html>
